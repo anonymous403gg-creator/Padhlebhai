@@ -1,0 +1,819 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#ffffff">
+<title>PadhleBhai — Study Progress</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --blue:#1769ff;
+  --navy:#102448;
+  --pale:#eaf2ff;
+  --ink:#18243a;
+  --muted:#667085;
+  --line:#dce5f2;
+  --shadow:0 8px 24px rgba(25,75,150,.08);
+}
+
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  background:#fff;
+  color:var(--ink);
+  font-family:Inter,Arial,sans-serif;
+  line-height:1.5;
+}
+
+button,input,select { font:inherit; }
+button { cursor:pointer; }
+
+.wrap {
+  max-width:1050px;
+  margin:auto;
+  padding:20px;
+}
+
+.topbar {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 0 18px;
+  border-bottom:1px solid var(--line);
+}
+
+.brand {
+  font:30px Anton,Impact,sans-serif;
+  color:var(--navy);
+}
+
+.brand span { color:var(--blue); }
+
+.pill {
+  border:1px solid #bcd2ff;
+  background:#f3f7ff;
+  color:var(--blue);
+  padding:8px 10px;
+  font:700 10px 'Space Mono',monospace;
+}
+
+.hero {
+  margin:22px 0;
+  background:linear-gradient(115deg,#edf4ff,#fff);
+  border:1px solid #cfddf5;
+  border-left:6px solid var(--blue);
+  padding:30px 24px;
+  box-shadow:var(--shadow);
+}
+
+.eyebrow {
+  color:var(--blue);
+  font:700 11px 'Space Mono',monospace;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+
+h1,h2,h3,p { margin-top:0; }
+
+.hero h1 {
+  font:clamp(38px,8vw,66px)/.98 Anton,Impact,sans-serif;
+  text-transform:uppercase;
+  margin:16px 0;
+}
+
+.hero p {
+  color:#58667c;
+  font-size:14px;
+  line-height:1.8;
+  margin-bottom:0;
+}
+
+.panel {
+  background:#fff;
+  border:1px solid var(--line);
+  padding:22px;
+  margin:18px 0;
+  box-shadow:var(--shadow);
+  min-width:0;
+}
+
+.rank-head {
+  display:flex;
+  align-items:center;
+  gap:14px;
+}
+
+.rank-icon {
+  width:62px;
+  height:62px;
+  flex-shrink:0;
+  display:grid;
+  place-items:center;
+  background:var(--pale);
+  border:2px solid var(--blue);
+  color:var(--blue);
+  font:30px Anton,Impact,sans-serif;
+}
+
+.rank-info { flex:1; min-width:0; }
+
+.rank-info h2 {
+  font:28px Anton,Impact,sans-serif;
+  margin:3px 0;
+  color:var(--navy);
+}
+
+.xp {
+  font:24px Anton,Impact,sans-serif;
+  color:var(--blue);
+  white-space:nowrap;
+}
+
+.muted { color:var(--muted); }
+
+.progress-track {
+  height:12px;
+  border:1px solid #c9d8ee;
+  background:#f1f5fb;
+  margin:18px 0 8px;
+  overflow:hidden;
+}
+
+.progress-fill {
+  height:100%;
+  width:0;
+  background:linear-gradient(90deg,var(--blue),#62b5ff);
+  transition:width .25s;
+}
+
+.between {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  color:var(--muted);
+  font:11px 'Space Mono',monospace;
+}
+
+.stats {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+
+.stat {
+  padding:13px 10px;
+  border:1px solid var(--line);
+  border-top:4px solid var(--blue);
+  min-width:0;
+}
+
+.stat:nth-child(2) { border-top-color:#39b7e8; }
+.stat:nth-child(3) { border-top-color:#ffb547; }
+
+.stat-label {
+  font:10px 'Space Mono',monospace;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+
+.stat-num {
+  font:34px Anton,Impact,sans-serif;
+  margin:8px 0;
+  color:var(--navy);
+  overflow-wrap:anywhere;
+}
+
+.stat-note {
+  font-size:9px;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+
+.section-title {
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between;
+  gap:10px;
+  margin:32px 0 12px;
+}
+
+.section-title h2 {
+  font:28px Anton,Impact,sans-serif;
+  margin:0;
+  text-transform:uppercase;
+  color:var(--navy);
+}
+
+.section-title span {
+  font:10px 'Space Mono',monospace;
+  color:var(--muted);
+  text-transform:uppercase;
+}
+
+label {
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin-bottom:7px;
+}
+
+input,select {
+  width:100%;
+  min-width:0;
+  padding:12px;
+  border:1px solid #cdd9e9;
+  border-radius:3px;
+  background:#fff;
+  color:var(--ink);
+  outline:none;
+}
+
+input:focus,select:focus {
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px #1769ff1a;
+}
+
+.field { margin-bottom:14px; }
+
+.grid2 {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+
+.btn {
+  border:0;
+  background:var(--blue);
+  color:#fff;
+  padding:12px 15px;
+  font-weight:800;
+  font-size:12px;
+  box-shadow:0 4px 0 #0c48b7;
+}
+
+.btn:active { transform:translateY(2px); }
+
+.btn.secondary {
+  background:#eaf2ff;
+  color:var(--blue);
+  box-shadow:0 4px 0 #cadcff;
+}
+
+.btn.dark {
+  background:var(--navy);
+  box-shadow:0 4px 0 #07152c;
+}
+
+.btn.small { padding:8px 10px; font-size:11px; }
+.btn:disabled { opacity:.5; cursor:not-allowed; }
+
+.choices {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+  margin-bottom:14px;
+}
+
+.choice {
+  padding:11px;
+  text-align:left;
+  background:#fff;
+  border:1px solid var(--line);
+  color:var(--ink);
+  font-size:12px;
+}
+
+.choice.active {
+  border-color:var(--blue);
+  background:#edf4ff;
+  color:var(--blue);
+  font-weight:800;
+}
+
+.coach-result {
+  background:#f1f6ff;
+  border-left:4px solid var(--blue);
+  padding:15px;
+  margin-top:16px;
+  display:none;
+}
+
+.coach-result h3 {
+  font:22px Anton,Impact,sans-serif;
+  margin-bottom:8px;
+}
+
+.coach-result p { font-size:13px; }
+
+.quest-list,.achievement-list,.exam-list {
+  display:grid;
+  gap:10px;
+}
+
+.quest,.exam {
+  border:1px solid var(--line);
+  padding:12px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#fff;
+  min-width:0;
+}
+
+.quest.done {
+  background:#f5f9ff;
+  border-color:#a9c8ff;
+}
+
+.quest-icon {
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  background:var(--pale);
+  color:var(--blue);
+  font:21px Anton,Impact,sans-serif;
+  flex-shrink:0;
+}
+
+.quest-info { flex:1; min-width:0; }
+
+.quest-info strong {
+  display:block;
+  font-size:13px;
+  overflow-wrap:anywhere;
+}
+
+.quest-info small {
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+  margin-top:3px;
+}
+
+.quest-reward {
+  color:var(--blue);
+  font:13px Anton,Impact,sans-serif;
+  white-space:nowrap;
+}
+
+.quest-actions {
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+
+.timer {
+  text-align:center;
+  background:linear-gradient(140deg,#f0f6ff,#fff);
+  border:1px solid #cdddf7;
+  padding:25px 14px;
+}
+
+.timer-number {
+  font:clamp(55px,13vw,80px) Anton,Impact,sans-serif;
+  color:var(--blue);
+  line-height:1.2;
+  margin:8px 0;
+}
+
+.timer-controls {
+  display:flex;
+  justify-content:center;
+  gap:9px;
+  flex-wrap:wrap;
+}
+
+.timer-sub {
+  font:11px 'Space Mono',monospace;
+  color:var(--muted);
+  letter-spacing:1px;
+}
+
+.badge-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+
+.achievement {
+  border:1px solid var(--line);
+  text-align:center;
+  padding:16px 6px;
+}
+
+.medal { font-size:26px; color:var(--blue); }
+
+.achievement strong {
+  display:block;
+  font-size:11px;
+  margin-top:8px;
+}
+
+.achievement small {
+  color:var(--muted);
+  font-size:10px;
+}
+
+.achievement.locked {
+  filter:grayscale(1);
+  opacity:.55;
+  background:#f7f8fa;
+}
+
+.notice {
+  font-size:11px;
+  color:var(--muted);
+  margin-top:10px;
+}
+
+.empty {
+  padding:18px;
+  text-align:center;
+  border:1px dashed #bdcce0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+footer {
+  text-align:center;
+  padding:30px 10px 12px;
+  color:var(--muted);
+  font:10px 'Space Mono',monospace;
+}
+
+.toast {
+  position:fixed;
+  left:50%;
+  bottom:24px;
+  transform:translateX(-50%);
+  background:var(--navy);
+  color:#fff;
+  padding:12px 18px;
+  z-index:9;
+  box-shadow:var(--shadow);
+  display:none;
+  max-width:90vw;
+  text-align:center;
+  font-size:13px;
+}
+
+@media(min-width:720px) {
+  .wrap { padding:28px; }
+  .hero { padding:42px; }
+  .panel { padding:26px; }
+  .columns {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:18px;
+    align-items:start;
+  }
+}
+
+@media(max-width:430px) {
+  .wrap { padding:14px; }
+  .hero { padding:24px 18px; }
+  .panel { padding:16px; }
+  .stats { gap:7px; }
+  .stat { padding:10px 8px; }
+  .stat-num { font-size:29px; }
+  .stat-label { font-size:9px; }
+  .rank-head { gap:9px; }
+  .rank-icon { width:50px; height:54px; }
+  .xp { font-size:21px; }
+  .grid2 { grid-template-columns:1fr; gap:0; }
+  .badge-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .quest { gap:7px; padding:10px; }
+  .quest-icon { width:33px; height:33px; }
+  .quest-reward { font-size:11px; }
+  .section-title h2 { font-size:25px; }
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+<header class="topbar">
+  <div class="brand">PADHLE<span>BHAI</span></div>
+  <div class="pill">● PLAYER ACTIVE</div>
+</header>
+
+<section class="hero">
+  <div class="eyebrow">Academic progression / season 01</div>
+  <h1>Get your study life<br>back on track.</h1>
+  <p>This isn't about studying for ten hours. It's about starting when you don't feel like it, beating distractions, and building a record you can be proud of.</p>
+</section>
+
+<section class="panel">
+  <div class="rank-head">
+    <div class="rank-icon" id="rankRoman">I</div>
+    <div class="rank-info">
+      <div class="eyebrow">Current rank</div>
+      <h2 id="rankName">ROOKIE</h2>
+      <div class="muted" id="rankMessage">Start small. Build momentum.</div>
+    </div>
+    <div class="xp"><span id="xpTotal">0</span> XP</div>
+  </div>
+  <div class="progress-track"><div class="progress-fill" id="rankProgress"></div></div>
+  <div class="between">
+    <span id="xpProgressText">0 / 100 XP</span>
+    <span id="nextRankText">NEXT: STARTER</span>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat">
+    <div class="stat-label">Quests cleared</div>
+    <div class="stat-num" id="questsCleared">0</div>
+    <div class="stat-note">Work finished</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Study time</div>
+    <div class="stat-num" id="studyTime">0m</div>
+    <div class="stat-note">Logged honestly</div>
+  </div>
+  <div class="stat">
+    <div class="stat-label">Study streak</div>
+    <div class="stat-num" id="streak">0</div>
+    <div class="stat-note">Days in a row</div>
+  </div>
+</section>
+
+<div class="section-title"><h2>01 / Study Coach</h2><span>Get unstuck</span></div>
+
+<section class="panel">
+  <div class="field">
+    <label>What's getting in your way right now?</label>
+    <div class="choices" id="blockerChoices">
+      <button class="choice active" data-blocker="start">I can't get started</button>
+      <button class="choice" data-blocker="overwhelmed">Too much to study</button>
+      <button class="choice" data-blocker="phone">Phone / distractions</button>
+      <button class="choice" data-blocker="tired">Low energy</button>
+      <button class="choice" data-blocker="confused">I don't understand it</button>
+      <button class="choice" data-blocker="avoid">Avoiding a difficult subject</button>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="field">
+      <label for="coachSubject">Subject</label>
+      <select id="coachSubject"></select>
+    </div>
+    <div class="field">
+      <label for="coachTime">Time available</label>
+      <select id="coachTime">
+        <option value="5">5 minutes</option>
+        <option value="10">10 minutes</option>
+        <option value="15" selected>15 minutes</option>
+        <option value="25">25 minutes</option>
+        <option value="45">45 minutes</option>
+      </select>
+    </div>
+  </div>
+
+  <button class="btn" id="coachButton">BUILD MY NEXT STEP</button>
+
+  <div class="coach-result" id="coachResult" aria-live="polite">
+    <div class="eyebrow">Your next move</div>
+    <h3 id="coachTitle"></h3>
+    <p id="coachText"></p>
+    <div class="quest-actions">
+      <button class="btn small" id="addCoachQuest">ADD AS QUEST</button>
+      <button class="btn secondary small" id="startCoachFocus">START FOCUS</button>
+    </div>
+  </div>
+</section>
+
+<div class="columns">
+  <div>
+    <div class="section-title"><h2>02 / Focus Room</h2><span>One thing only</span></div>
+    <section class="panel timer">
+      <div class="timer-sub" id="timerStatus">READY WHEN YOU ARE</div>
+      <div class="timer-number" id="timerDisplay">15:00</div>
+      <div class="field" style="max-width:250px;margin:0 auto 15px">
+        <label for="timerLength">Session length</label>
+        <select id="timerLength">
+          <option value="5">5 minutes</option>
+          <option value="10">10 minutes</option>
+          <option value="15" selected>15 minutes</option>
+          <option value="25">25 minutes</option>
+          <option value="45">45 minutes</option>
+        </select>
+      </div>
+      <div class="timer-controls">
+        <button class="btn" id="timerStart">START</button>
+        <button class="btn secondary" id="timerPause" disabled>PAUSE</button>
+        <button class="btn dark" id="timerReset">RESET</button>
+      </div>
+      <p class="notice">Finish a full session to earn XP. Keep the phone away if you can.</p>
+    </section>
+  </div>
+
+  <div>
+    <div class="section-title"><h2>03 / Quick Quest</h2><span>Make it specific</span></div>
+    <section class="panel">
+      <div class="field">
+        <label for="questTitle">What will you finish?</label>
+        <input id="questTitle" maxlength="100" placeholder="e.g. Solve 3 partnership sums">
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="questSubject">Subject</label>
+          <select id="questSubject"></select>
+        </div>
+        <div class="field">
+          <label for="questMinutes">Estimated time</label>
+          <select id="questMinutes">
+            <option value="5">5 min</option>
+            <option value="10">10 min</option>
+            <option value="15" selected>15 min</option>
+            <option value="25">25 min</option>
+            <option value="45">45 min</option>
+            <option value="60">60 min</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn" id="createQuest">ADD QUEST +</button>
+      <p class="notice">A good quest is small enough to start right now.</p>
+    </section>
+  </div>
+</div>
+
+<div class="section-title"><h2>04 / Your Quests</h2><span id="questCount">0 active</span></div>
+<section class="panel">
+  <div class="quest-list" id="questList"></div>
+</section>
+
+<div class="columns">
+  <div>
+    <div class="section-title"><h2>05 / Exam Countdown</h2><span>Plan ahead</span></div>
+    <section class="panel">
+      <div class="field">
+        <label for="examBoard">Board</label>
+        <select id="examBoard">
+          <option>CBSE</option>
+          <option>ICSE / CISCE</option>
+          <option>ISC / CISCE</option>
+          <option>WBBSE</option>
+          <option>WBCHSE</option>
+        </select>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="examName">Exam / subject</label>
+          <input id="examName" maxlength="80" placeholder="e.g. Accountancy">
+        </div>
+        <div class="field">
+          <label for="examDate">Exam date</label>
+          <input id="examDate" type="date">
+        </div>
+      </div>
+      <button class="btn" id="addExam">SAVE EXAM DATE</button>
+      <div class="exam-list" id="examList" style="margin-top:14px"></div>
+      <p class="notice">Use your school's official timetable. Board dates change every year.</p>
+    </section>
+  </div>
+
+  <div>
+    <div class="section-title"><h2>06 / Board Guide</h2><span>Know your format</span></div>
+    <section class="panel">
+      <div class="field">
+        <label for="guideBoard">Choose your board</label>
+        <select id="guideBoard">
+          <option value="CBSE">CBSE — Classes 11–12</option>
+          <option value="ICSE">ICSE — Class 10</option>
+          <option value="ISC">ISC — Classes 11–12</option>
+          <option value="WBBSE">WBBSE — Madhyamik</option>
+          <option value="WBCHSE">WBCHSE — Higher Secondary</option>
+        </select>
+      </div>
+      <div id="boardGuide"></div>
+      <p class="notice">General guidance only. Check official board and school notices for exact formats.</p>
+    </section>
+  </div>
+</div>
+
+<div class="section-title"><h2>07 / Achievements</h2><span>Proof of progress</span></div>
+<section class="panel">
+  <div class="badge-grid" id="achievementGrid"></div>
+</section>
+
+<footer>PADHLEBHAI / BUILD CONSISTENCY, NOT EXCUSES</footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+"use strict";
+
+const SUBJECTS = [
+  "Accountancy",
+  "Economics",
+  "Business Studies",
+  "Cost Accounting",
+  "Taxation",
+  "Financial Management (FFM)",
+  "Entrepreneurship",
+  "English",
+  "Physical Education",
+  "Other"
+];
+
+const RANKS = [
+  {name:"Rookie",min:0,roman:"I",message:"Start small. Build momentum."},
+  {name:"Starter",min:100,roman:"II",message:"You've started showing up."},
+  {name:"Regular",min:300,roman:"III",message:"Consistency is becoming a habit."},
+  {name:"Locked In",min:650,roman:"IV",message:"You're building real focus."},
+  {name:"Scholar",min:1100,roman:"V",message:"Your effort is adding up."},
+  {name:"Elite",min:1800,roman:"VI",message:"Strong habits. Keep them."},
+  {name:"Legend",min:2800,roman:"VII",message:"You built this one session at a time."}
+];
+
+const ACHIEVEMENTS = [
+  {name:"First Clear",desc:"Finish your first quest",icon:"✓",check:s=>s.questsDone>=1},
+  {name:"On a Roll",desc:"Finish 5 quests",icon:"★",check:s=>s.questsDone>=5},
+  {name:"Focus Found",desc:"Finish a focus session",icon:"◷",check:s=>s.focusSessions>=1},
+  {name:"One Hour In",desc:"Log 60 minutes",icon:"⌛",check:s=>s.studyMinutes>=60},
+  {name:"Showing Up",desc:"Study on 3 separate days",icon:"▦",check:s=>s.studyDays.length>=3},
+  {name:"Triple Digits",desc:"Earn 100 XP",icon:"XP",check:s=>s.xp>=100}
+];
+
+const BOARD_GUIDES = {
+  CBSE:{
+    title:"CBSE — Classes 11–12",
+    text:"Use the current syllabus and official sample papers. Class 12 papers may include objective, short-answer, and long-answer questions depending on the subject.",
+    tip:"Understand NCERT concepts, then practise the latest official sample paper."
+  },
+  ICSE:{
+    title:"ICSE — Class 10",
+    text:"ICSE is the CISCE Class 10 examination. Paper structures and internal assessment requirements vary by subject.",
+    tip:"Practise each subject's specimen paper instead of assuming every paper has the same format."
+  },
+  ISC:{
+    title:"ISC — Classes 11–12",
+    text:"ISC is the CISCE Class 12 examination. Written papers and practical or project components depend on the subject.",
+    tip:"Include project and practical preparation wherever required."
+  },
+  WBBSE:{
+    title:"WBBSE — Madhyamik",
+    text:"WBBSE conducts the Madhyamik examination, generally associated with Class 10. Follow the current syllabus and official subject-wise guidance.",
+    tip:"Practise previous papers and time your answers."
+  },
+  WBCHSE:{
+    title:"WBCHSE — Higher Secondary",
+    text:"WBCHSE covers Higher Secondary education. The applicable semester and examination structure depends on the academic session and subject.",
+    tip:"Confirm your current semester pattern before planning revision."
+  }
+};
+
+const STORAGE_KEY = "padhlebhai_progress_v2";
+
+function defaultState() {
+  return {
+    xp:0,
+    quests:[],
+    questsDone:0,
+    studyMinutes:0,
+    focusSessions:0,
+    studyDays:[],
+    exams:[],
+    blocker:"start"
+  };
+}
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return defaultState();
+
+    const parsed = JSON.parse(raw);
+    const base = defaultState();
+
+    return {
+      ...base,
+      ...parsed,
+      quests:Array.isArray(parsed.quests) ? parsed.quests : [],
+      exams:Array.isArray(parsed.exams) ? parsed.exams : [],
+      studyDays:Array.isArray(parsed.studyDays) ? parsed.studyDays : []
+    };
+  } catch (error) {
+    return defaultState();
+  }
+}
+
+let state = loadState();
+let coachPlan = null;
+let timerSeconds = 900;
+let timerInterval = null;
+let timerRunning = false;
+
+const $ = id => document.getElementById(id);
+
+function save() {
